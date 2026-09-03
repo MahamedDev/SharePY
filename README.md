@@ -30,69 +30,76 @@ cd SharePY
 
 No external dependencies are required.
 
-Run:
+Run the program:
 
 python3 sharepy.py
 
 📤 Sending a File
 
-On the device that will receive the file:
+First, run SharePY on the device that will receive the file.
 
+```text
 1- send
 2- receive
 Enter Num : 2
+```
+The receiver will start listening on TCP port "4444".
 
-The receiver starts listening on TCP port "4444".
+Then, run SharePY on the device that will send the file.
 
-Then, on the sending device:
-
+```text
 1- send
 2- receive
 Enter Num : 1
 Enter Path file : /path/to/file
-
-The file will be transferred to:
+```
+The received file will be saved in:
 
 /sdcard/SharePY/
 
 🌐 Network Configuration
 
-The current sender configuration connects to:
-
+The sender currently connects to:
+```text
 192.168.43.1:4444
+```
+This IP address is commonly used by some Android HotSpot configurations, but it may be different depending on your device or network.
 
-This address is commonly associated with Android HotSpot configurations, but it may be different depending on the device and network.
-
-If your network uses another address, change:
-
+If the receiver uses a different IP address, change:
+```text
 soc.connect(("192.168.43.1", 4444))
-
+```
 to the receiver's local IP address.
 
 The receiver listens on:
-
+```text
 0.0.0.0:4444
-
-which allows connections through available network interfaces.
+```
+which allows incoming connections through the available network interfaces.
 
 📊 Transfer Progress
 
-During a transfer, SharePY displays the approximate progress:
+During a file transfer, SharePY displays the approximate progress.
+```text
+Sender:
 
 File sent : 25 %
+
+Receiver:
+
 File received : 25 %
-
-and after completion:
-
+```
+When the transfer is complete, the sender displays:
+```text
 [+] File has been sent
-
-or:
-
+```
+The receiver displays:
+```text
 [+] File saved in /sdcard/SharePY/example.zip
-
+```
 ⚠️ Security Notice
 
-SharePY is designed for trusted local networks.
+SharePY is designed for use on trusted local networks.
 
 The current implementation does not provide:
 
@@ -102,31 +109,36 @@ The current implementation does not provide:
 - File integrity verification
 - Access control
 
-Anyone who can reach the listening port may potentially connect to the receiver.
+Anyone who can reach the receiver's listening port may potentially connect to it.
 
 Do not expose port "4444" to an untrusted network or the public internet.
 
 🔧 Technical Details
 
-SharePY uses:
+SharePY uses only Python's standard library.
+
+Main components include:
 
 - "socket" for TCP networking.
 - "os" for file and path operations.
 - TCP port "4444".
-- A "1 MB" buffer for file data.
-- A simple metadata header containing:
+- A "1 MB" buffer for file transfer.
+- A simple metadata header containing the file name and file size.
 
+The metadata format is:
+```text
 filename§filesize§
-
-The receiver uses the declared file size to determine transfer information and writes the received bytes to the output file.
+```
+The receiver extracts the file name and size from the metadata and writes the received data to the output file.
 
 📌 Limitations
 
 - Only one client is accepted at a time.
-- Both devices must have network connectivity to each other.
+- Both devices must be able to communicate over the local network.
 - The sender currently uses a fixed receiver IP address.
 - File names are not sanitized.
 - There is no encryption or authentication.
+- There is no file integrity verification.
 - The current protocol is intended for simple local file transfers.
 
 📜 License
@@ -142,3 +154,4 @@ MahamedDev
 ---
 
 ⭐ If you find SharePY useful, consider giving the repository a star.
+which allows incoming connections through the available network interfaces.
