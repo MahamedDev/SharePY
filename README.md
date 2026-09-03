@@ -24,10 +24,10 @@ It does not require an internet connection. One device acts as the sender, while
 🚀 Installation
 
 Clone the repository:
-
+```text
 git clone https://github.com/MahamedDev/SharePY.git
 cd SharePY
-
+```
 No external dependencies are required.
 
 Run the program:
